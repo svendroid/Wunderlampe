@@ -1,8 +1,5 @@
 Wunderlampe:
 
-Iteration 1:
-Webapp:
-- Fernbedienung
-
-Arduino:
-- RESTful service
+WebServer.pde
+- clean code
+- rewrite url parser, faster, more readable?
