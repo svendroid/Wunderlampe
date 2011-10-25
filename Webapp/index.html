@@ -11,26 +11,83 @@
 </style>
   
   <script type='text/javascript'>
+	
 	$('[data-role=page]').live('pagecreate', function () {
 		
-		/*$('.ui-slider-handle').live('vmousedown', function(){
-			$('div#test').append('vmousedown-slider-handle<br/>');
-		});*/
+		var fade = "test";
+		
+		$('.ui-slider-handle').live('touchend mousedown', function(){
+			console.log("mousedown");
+			console.log("Down ID: " + $(this).attr('aria-labelledby'));
+			console.log("Down VALUE: " + $(this).attr('aria-valuenow'));
+			fade = $(this).attr('aria-valuenow');
+		});
 		
 		$('.ui-slider-handle').live('touchend mouseup', function(){
 			console.log("mouseup");
-			console.log("ID: " + $(this).attr('aria-labelledby').replace("-label",""));
+			console.log("ID: " + $(this).attr('aria-labelledby'));
 			console.log("VALUE: " + $(this).attr('aria-valuenow'));
-			changeColor( this );
+			console.log("FADEVAL: " + fade);
+			changeColor( this, fade );
 		});
 	});
   
-	  function changeColor( elem ) {
+	  function changeColor( elem, elem1 ) {
 		
 		var slider_value = $(elem).attr('aria-valuenow');
-		var color = $(elem).attr('aria-labelledby').replace("-label","");
-		color = color.replace("slider", "");
-		var url = color + "/" + slider_value;
+		var mode;
+		var color;
+		var fade = elem1 + "/";
+		
+		console.log("FADE FUNC: " + fade);
+		
+		switch($(elem).attr('aria-labelledby').replace("-label", "")){
+			case("sliderRed"):
+				color = 0;
+				mode = "COLOR";
+				fade = "";
+				break;
+			case("sliderGreen"):
+				color = 1;
+				mode = "COLOR";
+				fade = "";
+				break;
+			case("sliderBlue"):
+				color = 2;
+				mode = "COLOR";
+				fade = "";
+				break;
+			case("sliderRedFade"):
+				color = 0;
+				mode = "COLOR";
+				break;
+			case("sliderGreenFade"):
+				color = 1;
+				mode = "COLOR";
+				break;
+			case("sliderBlueFade"):
+				color = 2;
+				mode = "COLOR";
+				break;
+			case("sliderFade7"):
+				color = 0;
+				mode = "MODE";
+				fade = "";
+				break;
+			case("sliderChange7"):
+				color = 1;
+				mode = "MODE";
+				fade = "";
+				break;			
+			case("sliderChange3"):
+				color = 2;
+				mode = "MODE";
+				fade = "";
+				break;
+		}
+				
+		
+		var url = mode + "/" + color + "/" + fade + slider_value;
 		console.log("val:" + slider_value);
 		console.log("color:" + color);
 		console.log("url:" + url);
@@ -85,40 +142,56 @@
 			<div data-role="collapsible" data-collapsed="false">
 					<h3>RGB Control</h3>
 					<div data-role="fieldcontain" id="containerRED">
-						<label for="sliderRED" class="ui-hidden-accessible">Red slider:</label>
-						<input type="range" name="sliderRED" id="sliderRED" value="0" min="0" max="255" />
+						<label for="sliderRed" class="ui-hidden-accessible">Red slider:</label>
+						<input type="range" name="sliderRed" id="sliderRed" value="0" min="0" max="255" />
 					</div>
 					<div data-role="fieldcontain">
-						<label for="sliderGRN" class="ui-hidden-accessible">Green slider</label>
-						<input type="range" name="sliderGRN" id="sliderGRN" value="0" min="0" max="255" />
+						<label for="sliderGreen" class="ui-hidden-accessible">Green slider</label>
+						<input type="range" name="sliderGreen" id="sliderGreen" value="0" min="0" max="255" />
 					</div>
 					<div data-role="fieldcontain">
-						<label for="sliderBLU" class="ui-hidden-accessible">Blue slider</label>
-						<input type="range" name="sliderBLU" id="sliderBLU" value="0" min="0" max="255" />
+						<label for="sliderBlue" class="ui-hidden-accessible">Blue slider</label>
+						<input type="range" name="sliderBlue" id="sliderBlue" value="0" min="0" max="255" />
+					</div>
+			</div>
+			
+			<div data-role="collapsible" data-collapsed="false">
+					<h3>RGB Control Fade</h3>
+					<div data-role="fieldcontain" id="containerRED">
+						<label for="sliderRedFade" class="ui-hidden-accessible">Red slider:</label>
+						<input type="range" name="sliderRedFade" id="sliderRedFade" value="0" min="0" max="255" />
+					</div>
+					<div data-role="fieldcontain">
+						<label for="sliderGreenFade" class="ui-hidden-accessible">Green slider</label>
+						<input type="range" name="sliderGreenFade" id="sliderGreenFade" value="0" min="0" max="255" />
+					</div>
+					<div data-role="fieldcontain">
+						<label for="sliderBlueFade" class="ui-hidden-accessible">Blue slider</label>
+						<input type="range" name="sliderBlueFade" id="sliderBlueFade" value="0" min="0" max="255" />
 					</div>
 			</div>
 			
 			<div data-role="collapsible">
 				<h3>7 colour fade</h3>
 				<div data-role="fieldcontain">
-						<label for="sliderSpeed">Speed:</label>
-						<input type="range" name="sliderSpeed" id="sliderSpeed" value="11" min="11" max="100" />
+						<label for="sliderFade7">Speed:</label>
+						<input type="range" name="sliderFade7" id="sliderFade7" value="11" min="11" max="100" />
 				´</div>
 			</div>
 			
 			<div data-role="collapsible">
 				<h3>7 colour change</h3>
 				<div data-role="fieldcontain">
-						<label for="sliderSpeed">Speed:</label>
-						<input type="range" name="sliderSpeed" id="sliderSpeed" value="11" min="11" max="100" />
+						<label for="sliderChange7">Speed:</label>
+						<input type="range" name="sliderChange7" id="sliderChange7" value="11" min="11" max="255" />
 				´</div>
 			</div>
 			
 			<div data-role="collapsible">
 				<h3>3 colour change</h3>
 				<div data-role="fieldcontain">
-						<label for="sliderSpeed">Speed:</label>
-						<input type="range" name="sliderSpeed" id="sliderSpeed" value="11" min="11" max="100" />
+						<label for="sliderChange3">Speed:</label>
+						<input type="range" name="sliderChange3" id="sliderChange3" value="11" min="11" max="100" />
 				´</div>
 			</div>
 		</div>	
