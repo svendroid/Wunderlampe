@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Test</title>
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0rc2/jquery.mobile-1.0rc2.min.css" />
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.0rc2/jquery.mobile-1.0rc2.min.js"></script>
+<style type='text/css'>
+	.ui-field-contain input.ui-slider-input{display: none;}
+</style>
+  
+  <script type='text/javascript'>
+	$('[data-role=page]').live('pagecreate', function () {
+		
+		/*$('.ui-slider-handle').live('vmousedown', function(){
+			$('div#test').append('vmousedown-slider-handle<br/>');
+		});*/
+		
+		$('.ui-slider-handle').live('touchend mouseup', function(){
+			console.log("mouseup");
+			console.log("ID: " + $(this).attr('aria-labelledby').replace("-label",""));
+			console.log("VALUE: " + $(this).attr('aria-valuenow'));
+			changeColor( this );
+		});
+	});
+  
+	  function changeColor( elem ) {
+		
+		var slider_value = $(elem).attr('aria-valuenow');
+		var color = $(elem).attr('aria-labelledby').replace("-label","");
+		color = color.replace("slider", "");
+		var url = color + "/" + slider_value;
+		console.log("val:" + slider_value);
+		console.log("color:" + color);
+		console.log("url:" + url);
+	  
+		
+		console.log("change Color");
+		$.get(
+			"http://192.168.0.101/" + url
+		);
+		}
+  </script>
+  
+<body>
+
+<!-- Start of first page: #startseite -->
+<div data-role="page" id="startseite">
+	<div data-role="header">
+		<h1>Wunderlampe</h1>
+	</div><!-- /header -->
+	<div data-role="content">
+		<ul data-role="listview" data-theme="d" data-inset="true">
+			<li data-role="list-divider" role="heading">Modi</li>
+			<li><a href="#fernbedienung">Fernbedienung</a></li>
+			<li><a href="index.html">Sonnenaufgangswecker</a></li>
+			<li><a href="index.html">Wer ist am hellsten?</a></li>
+			<li><a href="index.html">Wahrsagelicht</a></li>
+			<li><a href="index.html">Wetter</a></li>
+			<li><a href="index.html">Aufgabenliste</a></li>
+		</ul>
+		
+		<ul data-role="listview" data-theme="d" data-inset="true">
+			<li data-role="list-divider" role="heading">Dokumentation</li>
+			<li><a href="index.html">Anleitung</a></li>
+			<li><a href="index.html">Info</a></li>
+			<li><a href="index.html">Test</a></li>
+		</ul>
+	</div><!-- /content -->
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+<!-- Start of first page: #fernbedienung -->
+<div data-role="page" id="fernbedienung">
+	<div data-role="header">
+		<h1>Fernbedienung</h1>
+	</div><!-- /header -->
+	<div data-role="content">
+		
+		<div data-role="collapsible-set" data-theme="c" data-content-theme="d">
+
+			<div data-role="collapsible" data-collapsed="false">
+					<h3>RGB Control</h3>
+					<div data-role="fieldcontain" id="containerRED">
+						<label for="sliderRED" class="ui-hidden-accessible">Red slider:</label>
+						<input type="range" name="sliderRED" id="sliderRED" value="0" min="0" max="255" />
+					</div>
+					<div data-role="fieldcontain">
+						<label for="sliderGRN" class="ui-hidden-accessible">Green slider</label>
+						<input type="range" name="sliderGRN" id="sliderGRN" value="0" min="0" max="255" />
+					</div>
+					<div data-role="fieldcontain">
+						<label for="sliderBLU" class="ui-hidden-accessible">Blue slider</label>
+						<input type="range" name="sliderBLU" id="sliderBLU" value="0" min="0" max="255" />
+					</div>
+			</div>
+			
+			<div data-role="collapsible">
+				<h3>7 colour fade</h3>
+				<div data-role="fieldcontain">
+						<label for="sliderSpeed">Speed:</label>
+						<input type="range" name="sliderSpeed" id="sliderSpeed" value="11" min="11" max="100" />
+				´</div>
+			</div>
+			
+			<div data-role="collapsible">
+				<h3>7 colour change</h3>
+				<div data-role="fieldcontain">
+						<label for="sliderSpeed">Speed:</label>
+						<input type="range" name="sliderSpeed" id="sliderSpeed" value="11" min="11" max="100" />
+				´</div>
+			</div>
+			
+			<div data-role="collapsible">
+				<h3>3 colour change</h3>
+				<div data-role="fieldcontain">
+						<label for="sliderSpeed">Speed:</label>
+						<input type="range" name="sliderSpeed" id="sliderSpeed" value="11" min="11" max="100" />
+				´</div>
+			</div>
+		</div>	
+		
+	</div><!-- /content -->
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+
+
+  
+</body>
+
+
+</html>
+
