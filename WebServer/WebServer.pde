@@ -124,17 +124,26 @@ void loop() {
                     int i = atoi(par3);
                     int j = atoi(par4);
                     int interval = 1;
-                    if(i > j){
-                      interval = -1;
+                    if(i <= j){  
+                      while(i <= j){
+                        DmxSimple.write(MODE, 0);
+                        DmxSimple.write(SPEED, 0);
+                        DmxSimple.write(color, i);
+                        i++;
+                        Serial.println(i);
+                        delay(5);
+                      }
+                    }else{
+                      while(i > j){
+                        DmxSimple.write(MODE, 0);
+                        DmxSimple.write(SPEED, 0);
+                        DmxSimple.write(color, i);
+                        i--;
+                        Serial.println(i);
+                        delay(5);
+                      }
                     }
-                    while(i * interval <= j){
-                      DmxSimple.write(MODE, 0);
-                      DmxSimple.write(SPEED, 0);
-                      DmxSimple.write(color, i);
-                      i+=interval;
-                      Serial.println(i);
-                      delay(5);
-                    }
+                      
                   }
               }
             }else if(strcmp(par1, "MODE") == 0){
