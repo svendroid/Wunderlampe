@@ -1,0 +1,8 @@
+Wunderlampe:
+
+Iteration 1:
+Webapp:
+- Fernbedienung
+
+Arduino:
+- RESTful service
