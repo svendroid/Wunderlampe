@@ -3,3 +3,7 @@ Wunderlampe:
 WebServer.pde
 - clean code
 - rewrite url parser, faster, more readable?
+
+Webapp:
+- Modes, pause button? 255 langsamer wechsel, 101 pause? 11-100 speed einstellung
+- Lampe reseten wenn tab aufgeklappt wird, so dass slider mit lampe übereinstimmen
