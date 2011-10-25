@@ -1,0 +1,21 @@
+API Webserver.pde
+
+Set Color:
+../COLOR/[0 = RED, 1 = GREEN, 2 = BLUE]/[0 - 255]
+
+Fade Color from .. to ..
+../COLOR/[0 = RED, 1 = GREEN, 2 = BLUE]/[0 - 255]/[0 - 255]
+
+Set mode
+../MODE/[0 = 7 color fade, 1 = 7 color change, 2 = 3 color change]/[11-100 = speed of change]
+
+
+
+change api to ... ???
+../MODE/[RED/GREEN/BLUE/SPEED
+MODE: 0 = RGB, 1 = color fade, 2 = 7 color change, 3 = 3 color change
+RED: 0 - 255
+GREEN: 0 -255
+BLUE: 0 -255
+SPEED: 11 - 100 / 151 - 255 control by unit, music, potentiometer
+

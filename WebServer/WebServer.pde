@@ -1,9 +1,6 @@
 /*
  * Web Server
  *
- * (Based on Ethernet's WebServer Example)
- *
- * A simple web server that shows the value of the analog input pins.
  */
 
 #include "WiFly.h"
@@ -96,54 +93,83 @@ void loop() {
           
           urlString.toCharArray(httpRequest, BUFSIZE);
           
+          //COLOR or MODE
           char *par1 = strtok(httpRequest, "/");
+          //Number
           char *par2 = strtok(NULL,"/");
-          
+          //VALUE 2
+          char *par3 = strtok(NULL,"/");
+          char *par4 = strtok(NULL,"/");
+          Serial.print("color");
           Serial.println(par1);
+          Serial.print("par2");
           Serial.println(par2);
+          Serial.print("par3");
+          Serial.println(par3);
+          Serial.print("par4");
+          Serial.println(par4);     
           
           if(par1 != NULL){
-            if(strcmp(par1, "LED") == 0){
+            if(strcmp(par1, "COLOR") == 0){
               if(par2 != NULL){
-                int i = atoi(par2);
-                DmxSimple.write(RED, i);
-                Serial.println(i);
+                int color = atoi(par2) + 2; //+2 to match channel
+                  if(par3 != NULL && par4 == NULL){ //set color value
+                    int colorvalue = atoi(par3);
+                    DmxSimple.write(MODE, 0);
+                    DmxSimple.write(SPEED, 0);  
+                    DmxSimple.write(color, colorvalue);
+                    Serial.print("colorvalue:");
+                    Serial.println(colorvalue);
+                  }else if(par3 != NULL && par4 != NULL){ //fade from i to j
+                    int i = atoi(par3);
+                    int j = atoi(par4);
+                    int interval = 1;
+                    if(i > j){
+                      interval = -1;
+                    }
+                    while(i * interval <= j){
+                      DmxSimple.write(MODE, 0);
+                      DmxSimple.write(SPEED, 0);
+                      DmxSimple.write(color, i);
+                      i+=interval;
+                      Serial.println(i);
+                      delay(5);
+                    }
+                  }
               }
-            }else if(strcmp(par1, "RED") == 0){
-              if(par2 != NULL){
-                int i = atoi(par2);
-                DmxSimple.write(RED, i);
-                Serial.println(i);
-              }
-            }else if(strcmp(par1, "GRN") == 0){
-              if(par2 != NULL){
-                int i = atoi(par2);
-                DmxSimple.write(GRN, i);
-                Serial.println(i);
-              }
-            }else if(strcmp(par1, "BLU") == 0){
-              if(par2 != NULL){
-                int i = atoi(par2);
-                DmxSimple.write(BLU, i);
-                Serial.println(i);
-              }
-            }
-            
+            }else if(strcmp(par1, "MODE") == 0){
+              if(par2 != NULL && par3 != NULL){
+                int mode = atoi(par2);
+                int changespeed = atoi(par3);
+                
+                switch (mode){
+                  case 0:
+                    mode = 64;
+                    break;
+                  case 1:
+                    mode = 128;
+                    break;
+                  case 2:
+                    mode = 192;
+                    break;
+                  default:
+                    ;//do nothing
+                }                
+                
+                DmxSimple.write(MODE, mode);
+                DmxSimple.write(SPEED, changespeed);
+                
+            }            
           }
+        }
                                           
           // send a standard http response header
           client.println("HTTP/1.1 200 OK");
           client.println("Content-Type: text/html");
           client.println();
+          
+          //send a json response
           /*
-          // output the value of each analog input pin
-          client.print("LED2: HIGH");
-          client.println(rqMethod);
-          client.println("<br />");
-          client.println(urlString);
-          client.println("<br />");
-          client.println(par1);
-          client.println("<br />");
           client.println(par2);
           client.println("<br />");
           */
